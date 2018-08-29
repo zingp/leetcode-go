@@ -71,10 +71,63 @@ func myAtoi(str string) int {
 	return ret*sign
 }
 
+func myAtoi2(str string) int {
+    res := 0
+    i := 0
+    
+    // get the first non-space character
+    for i < len(str) {
+        if str[i] == ' ' {
+            i++            
+        } else {
+            break
+        }  
+    }
+    
+    sign := 1
+    firstNonSpace := true
+    for i < len(str) {
+        // the  first non-negative value
+        if firstNonSpace {
+            firstNonSpace = false
+            
+            if str[i] == '-' || (str[i] >= '0' && str[i] <= '9') || str[i] == '+' {
+                if str[i] == '-' {
+                    sign = -1
+                } else if str[i] >= '0' && str[i] <= '9' {
+                    res = res * 10 + int(str[i] - '0')                    
+                }
+                i++
+            } else {
+                return res
+            }
+        } else {
+            // if it's not the first non-negative value.
+			// we will simple stop when we reach the first non-valid symbol.
+            if str[i] >= '0' && str[i] <= '9' {
+                res = res * 10 + int(str[i] - '0')
+                i++
+            } else {
+                return res * sign
+            }
+		}
+		
+        if res * sign < -2147483648 {
+            return -2147483648
+        }
+        
+        if res * sign > 2147483647 {
+            return 2147483647
+        }
+    }
+
+    return res * sign
+}
+
 func main() {
 
-	str := "-9223372036854775808"
-	ret := myAtoi(str)
+	str := "-9223372036854775808aa"
+	ret := myAtoi2(str)
 
 	fmt.Println(ret)
 }
