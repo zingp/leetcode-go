@@ -4,20 +4,19 @@ import (
 	"fmt"
 )
 
-/*
-Definition for singly-linked list.
-*/
+// ListNode 链表结构体定义
 type ListNode struct {
-	Val int
+	Val  int
 	Next *ListNode
 }
 
+// 判断是否是回文链表
 func isPalindrome(head *ListNode) bool {
 	// 如果只有一个元素
-    if head == nil || head.Next == nil {
+	if head == nil || head.Next == nil {
 		return true
 	}
-	
+
 	// 用两个指针，慢指针每次移动一位，快指针每次移动两位，找到中点slow
 	slow := head
 	fast := head
@@ -25,7 +24,7 @@ func isPalindrome(head *ListNode) bool {
 		slow = slow.Next
 		fast = fast.Next.Next
 	}
-	
+
 	// 反转后半段链表，pre就是反转后的头结点
 	var pre *ListNode
 	var next *ListNode
@@ -49,7 +48,8 @@ func isPalindrome(head *ListNode) bool {
 }
 
 // 单链表反转
-func reverseList(head *ListNode)(*ListNode){
+// 用两个指针，pre代表当前节点的前一个节点，next代表当前节点的后一个节点
+func reverseList(head *ListNode) *ListNode {
 	if head == nil {
 		return head
 	}
@@ -65,6 +65,7 @@ func reverseList(head *ListNode)(*ListNode){
 	return pre
 }
 
+// 打印链表的每一个元素
 func rangeList(head *ListNode) {
 	if head == nil {
 		fmt.Println(nil)
@@ -72,36 +73,35 @@ func rangeList(head *ListNode) {
 	for head != nil {
 		fmt.Println(head.Val)
 		head = head.Next
-	}	
+	}
 }
 
 // 寻找链表中点的节点
-func selectMidListNode(head *ListNode) (*ListNode) {
+func selectMidListNode(head *ListNode) *ListNode {
 	// 如果只有一个元素
-    if head == nil {
+	if head == nil {
 		return head
 	}
 	slow := head
 	fast := head
-	for (fast!= nil && fast.Next != nil) {
+	for fast != nil && fast.Next != nil {
 		slow = slow.Next
 		fast = fast.Next.Next
 	}
 	return slow
 }
 
-
-
-func genListNode(){
-	n1 := &ListNode{Val:1,}
-	// n2 := &ListNode{Val:1,}
-	// n3 := &ListNode{Val:2,}
-	// n4 := &ListNode{Val:1,}
-	// n5 := &ListNode{Val:5,}
-	// n1.Next = n2
-	// n2.Next = n3
-	// n3.Next = n4
-	// n4.Next = n5
+// 生成测试链表
+func genListNode() {
+	n1 := &ListNode{Val: 1}
+	n2 := &ListNode{Val: 1}
+	n3 := &ListNode{Val: 2}
+	n4 := &ListNode{Val: 1}
+	n5 := &ListNode{Val: 5}
+	n1.Next = n2
+	n2.Next = n3
+	n3.Next = n4
+	n4.Next = n5
 
 	// mid := selectMidListNode(n1)
 	// rev := reverseList(n1)
