@@ -113,3 +113,34 @@ func genListNode() {
 func main() {
 	genListNode()
 }
+
+// 在O(1)时间复杂度内删除单链表指定节点
+func deleteNode(head *ListNode, node *ListNode)(*ListNode){
+	// 如果输入参数有空，直接返回头结点
+	if head == nil || node == nil {
+		return head
+	}
+	// 如果删除的是头结点
+	if head == node {
+		return head.Next
+	}
+
+	//如果链表有两个及以上节点，且删除的是尾节点
+	if node.Next == nil {
+		// 找待删除元素的前驱节点  
+		tmp := head
+		for  tmp.Next != node {
+			tmp = tmp.Next
+		}
+		// 删除节点
+		tmp.Next = nil
+	}else {
+		// 如果链表有两个及以上节点，且删除的是某个中间结点
+		// 将待删除的节点的下一个节点的值 付给待删除的节点
+		node.Val = node.Next.Val
+		// 将待删除节点的下节点指向下下个节点，即删除待删除节点的下一个节点
+		node.Next = node.Next.Next
+	}
+	// 返回删除节点后的链表头结点
+	return head
+}
