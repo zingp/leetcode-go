@@ -151,9 +151,9 @@ func reverseBetween(head *ListNode, m int, n int)(* ListNode){
 		return head
 	}
 	i := 1
-	var reverseNewHead *ListNode  // 反转部分链表反转后的头结点，反转过程中这个节点不断变化
-	var reverseNewTail *ListNode  // 第m个节点，即反转部分链表反转后的尾结点
-	var reversePreNode *ListNode  // 第m-1 个节点，即反转部分链表反转前其头结点的前一个结点
+	var reverseNewHead *ListNode   // 反转部分链表反转后的头结点，反转过程中这个节点不断变化
+	var reverseNewTail *ListNode   // 第m个节点，即反转部分链表反转后的尾结点
+	var reversePreNode *ListNode   // 第m-1 个节点，即反转部分链表反转前其头结点的前一个结点
 	var reverseNextNode *ListNode  // 反转时，用于挂住下一个节点的节点，当前head的下一个节点
 	oldHead := head
 	for head != nil {
@@ -189,4 +189,23 @@ func reverseBetween(head *ListNode, m int, n int)(* ListNode){
 		// 如果第m-1个节点是空节点说明m=1，从头开始反转；新的头结点就是reverseNewHead
 		return reverseNewHead
 	}
+}
+
+// 旋转单链表
+func rotateRight(head *ListNode, k int)(*ListNode) {
+	n := 0 
+	cur := head
+	for cur != nil {
+		n++
+		cur = cur.Next
+	}
+	// 首尾连接
+	cur.Next = head
+	m := n - k%n
+	for i:=0; i<m; i++ {
+		cur = cur.Next
+	}
+	newHead := cur.Next
+	cur.Next = nil
+	return newHead
 }
