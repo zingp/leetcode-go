@@ -144,3 +144,49 @@ func deleteNode(head *ListNode, node *ListNode)(*ListNode){
 	// 返回删除节点后的链表头结点
 	return head
 }
+
+// 反转部分单链表
+func reverseBetween(head *ListNode, m int, n int)(* ListNode){
+	if head == nil || head.Next == nil {
+		return head
+	}
+	i := 1
+	var reverseNewHead *ListNode  // 反转部分链表反转后的头结点，反转过程中这个节点不断变化
+	var reverseNewTail *ListNode  // 第m个节点，即反转部分链表反转后的尾结点
+	var reversePreNode *ListNode  // 第m-1 个节点，即反转部分链表反转前其头结点的前一个结点
+	var reverseNextNode *ListNode  // 反转时，用于挂住下一个节点的节点，当前head的下一个节点
+	oldHead := head
+	for head != nil {
+		if i > n {
+			break
+		}
+
+		if i == m-1 {
+			reversePreNode = head
+		}
+		if i >= m && i <= n {
+			if i == m {
+				reverseNewTail = head
+			}
+			reverseNextNode = head.Next
+			head.Next = reverseNewHead
+			reverseNewHead = head
+			head = reverseNextNode
+		}else{
+			head = head.Next
+		}
+
+		i++
+	}
+	// 反转部分反转之后，整体反转一次，连接断开的地方
+	// 反转部分反转之后，第m个节点的下一个节点应该是第n+1个节点
+	reverseNewTail.Next = reverseNextNode
+	// 第m-1个节点不是空节点，则他的下一个节点应该反转部分的头结点
+	if reversePreNode != nil {
+		reversePreNode.Next = reverseNewHead
+		return oldHead
+	} else {
+		// 如果第m-1个节点是空节点说明m=1，从头开始反转；新的头结点就是reverseNewHead
+		return reverseNewHead
+	}
+}
