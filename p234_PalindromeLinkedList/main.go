@@ -91,29 +91,6 @@ func selectMidListNode(head *ListNode) *ListNode {
 	return slow
 }
 
-// 生成测试链表
-func genListNode() {
-	n1 := &ListNode{Val: 1}
-	n2 := &ListNode{Val: 1}
-	n3 := &ListNode{Val: 2}
-	n4 := &ListNode{Val: 1}
-	n5 := &ListNode{Val: 5}
-	n1.Next = n2
-	n2.Next = n3
-	n3.Next = n4
-	n4.Next = n5
-
-	// mid := selectMidListNode(n1)
-	// rev := reverseList(n1)
-	// rangeList(rev)
-	fmt.Println(isPalindrome(n1))
-
-}
-
-func main() {
-	genListNode()
-}
-
 // 在O(1)时间复杂度内删除单链表指定节点
 func deleteNode(head *ListNode, node *ListNode)(*ListNode){
 	// 如果输入参数有空，直接返回头结点
@@ -193,11 +170,15 @@ func reverseBetween(head *ListNode, m int, n int)(* ListNode){
 
 // 旋转单链表
 func rotateRight(head *ListNode, k int)(*ListNode) {
-	n := 0 
+	if head == nil || head.Next == nil {
+		return head
+	}
+	n := 1
 	cur := head
-	for cur != nil {
-		n++
+	// 注意如果这里是cur != nil 最后cur就是nil了
+	for cur.Next != nil {
 		cur = cur.Next
+		n++
 	}
 	// 首尾连接
 	cur.Next = head
@@ -208,4 +189,61 @@ func rotateRight(head *ListNode, k int)(*ListNode) {
 	newHead := cur.Next
 	cur.Next = nil
 	return newHead
+}
+
+//  删除单链表倒数第 k 个节点
+func deleteKNode(head *ListNode, k int)(*ListNode){
+	if head == nil || head.Next == nil {
+		return nil
+	}
+	fast := head
+	slow := head
+	i := 0
+	for fast != nil {
+		fast = fast.Next
+		if i >= k {
+			slow = slow.Next
+		}
+		i++
+	}
+	slow.Val = slow.Next.Val
+	slow.Next = slow.Next.Next
+	
+	return head
+}
+
+// 生成测试链表
+func genListNode()(*ListNode) {
+	n1 := &ListNode{Val: 1}
+	n2 := &ListNode{Val: 2}
+	n3 := &ListNode{Val: 3}
+	n4 := &ListNode{Val: 4}
+	n5 := &ListNode{Val: 5, Next: nil}
+	n1.Next = n2
+	n2.Next = n3
+	n3.Next = n4
+	n4.Next = n5
+
+	return n1
+}
+
+func main() {
+	head := genListNode()
+	rangeList(head)
+	fmt.Println("----------------------")
+
+	// rangeList(deleteKNode(head, 2))
+	// rangeList(rotateRight(head, 3))
+	// rangeList(reverseBetween(head, 2, 4))
+	i := 1 
+	cur := head
+	for cur != nil {
+		if i == 4{
+			break
+		}
+		cur = cur.Next
+		i++
+	}
+	// cur 就是第4个节点
+	rangeList(deleteNode(head, cur))
 }
