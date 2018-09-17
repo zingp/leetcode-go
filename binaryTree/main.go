@@ -16,9 +16,21 @@ func getNodeNum(root *TreeNode) int {
 	if root == nil {
 		return 0
 	}
-
 	return getNodeNum(root.Left) + getNodeNum(root.Right) + 1
+}
 
+// 获取二叉树的最大深度
+func maxDeep(root *TreeNode) int {
+	if root == nil {
+		return 0
+	}
+	x := maxDeep(root.Left)
+	y := maxDeep(root.Right)
+	if x > y {
+		return x + 1
+	}else{
+		return y +1
+	}
 }
 
 func geneBinaryTree() *TreeNode {
@@ -50,7 +62,9 @@ func geneBinaryTree() *TreeNode {
 func main(){
 
 	root := geneBinaryTree()
-	num := getNodeNum(root)
-	fmt.Printf("node num = %d\n",num)
+	// num := getNodeNum(root)
+	// fmt.Printf("node num = %d\n",num)
+
+	fmt.Printf("max deep:%d", maxDeep(root))
 
 }
