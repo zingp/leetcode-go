@@ -49,6 +49,17 @@ func minDeep(root *TreeNode) int {
 	return left + 1
 }
 
+// 先序遍历
+func preOrderTraversal(root *TreeNode, r []int) []int {
+	if root == nil {
+		return r
+	}
+	r = append(r, root.Val)
+	r = preOrderTraversal(root.Left, r)
+	r = preOrderTraversal(root.Right, r)
+	return r
+}
+
 func geneBinaryTree() *TreeNode {
 	n1 := &TreeNode{Val:1,}
 	n2 := &TreeNode{Val:2,}
@@ -71,8 +82,6 @@ func geneBinaryTree() *TreeNode {
 	n4.Right = n9
 	n5.Left = n10
 	return n1
-
-
 }
 
 func main(){
@@ -83,5 +92,7 @@ func main(){
 
 	// fmt.Printf("max deep:%d", maxDeep(root))
 
-	fmt.Printf("min deep:%d", minDeep(root))
+	// fmt.Printf("min deep:%d", minDeep(root))
+	var r []int
+	fmt.Printf("pre order traversql:%v", preOrderTraversal(root, r))
 }
