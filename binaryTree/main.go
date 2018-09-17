@@ -24,13 +24,29 @@ func maxDeep(root *TreeNode) int {
 	if root == nil {
 		return 0
 	}
+
 	x := maxDeep(root.Left)
 	y := maxDeep(root.Right)
 	if x > y {
 		return x + 1
-	}else{
-		return y +1
+	} 
+	return y + 1
+}
+
+// 获取二叉树最小深度
+func minDeep(root *TreeNode) int {
+	if root == nil {
+		return 0
 	}
+	left := minDeep(root.Left)
+	right := minDeep(root.Right)
+	if left == 0 || right == 0 {
+		return left + right + 1
+	}
+	if left > right {
+		return right + 1
+	}
+	return left + 1
 }
 
 func geneBinaryTree() *TreeNode {
@@ -65,6 +81,7 @@ func main(){
 	// num := getNodeNum(root)
 	// fmt.Printf("node num = %d\n",num)
 
-	fmt.Printf("max deep:%d", maxDeep(root))
+	// fmt.Printf("max deep:%d", maxDeep(root))
 
+	fmt.Printf("min deep:%d", minDeep(root))
 }
