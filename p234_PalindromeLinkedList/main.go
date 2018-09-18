@@ -212,11 +212,37 @@ func deleteKNode(head *ListNode, k int)(*ListNode){
 	return head
 }
 
+// 单链表划分
+// 有问题
+func partition(head *ListNode, x int) *ListNode {
+	if head == nil {
+		return head
+	}
+	var leftDummy = &ListNode{}
+	var rightDummy = &ListNode{}
+	left := leftDummy
+	right := rightDummy
+
+	for head != nil {
+		if head.Val < x {
+			left.Next = head
+			left = head
+		} else {
+			right.Next = head
+			right = head
+		}
+		head = head.Next
+	}
+	right.Next = nil
+	left.Next = rightDummy.Next
+	return leftDummy.Next
+}
+
 // 生成测试链表
 func genListNode()(*ListNode) {
-	n1 := &ListNode{Val: 1}
+	n1 := &ListNode{Val: 8}
 	n2 := &ListNode{Val: 2}
-	n3 := &ListNode{Val: 3}
+	n3 := &ListNode{Val: 7}
 	n4 := &ListNode{Val: 4}
 	n5 := &ListNode{Val: 5, Next: nil}
 	n1.Next = n2
@@ -235,15 +261,17 @@ func main() {
 	// rangeList(deleteKNode(head, 2))
 	// rangeList(rotateRight(head, 3))
 	// rangeList(reverseBetween(head, 2, 4))
-	i := 1 
-	cur := head
-	for cur != nil {
-		if i == 4{
-			break
-		}
-		cur = cur.Next
-		i++
-	}
-	// cur 就是第4个节点
-	rangeList(deleteNode(head, cur))
+	// i := 1 
+	// cur := head
+	// for cur != nil {
+	// 	if i == 4{
+	// 		break
+	// 	}
+	// 	cur = cur.Next
+	// 	i++
+	// }
+	// // cur 就是第4个节点
+	// rangeList(deleteNode(head, cur))
+
+	rangeList(partition(head, 5))
 }
