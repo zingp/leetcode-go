@@ -60,7 +60,31 @@ func preOrderTraversal(root *TreeNode, r []int) []int {
 	return r
 }
 
+// 中序
+func midOrderTraversal(root *TreeNode, r []int) []int {
+	if root == nil {
+		return r
+	}
+	r = midOrderTraversal(root.Left, r)
+	r = append(r, root.Val)
+	r = midOrderTraversal(root.Right, r)
+	return r
+}
+
+// 后序
+func postOrderTraversal(root *TreeNode, r []int) []int {
+	if root ==  nil {
+		return r
+	}
+
+	r = postOrderTraversal(root.Left, r)
+	r = preOrderTraversal(root.Right, r)
+	r = append(r, root.Val)
+	return r
+}
+
 // 广度优先
+// 定义一个切片将每个节点的左右节点都依次加入，每次取这个切片的第一个节点的val
 func breadthFirstSearch(root *TreeNode) []int {
 	result := []int{}
 	nodeSlice := []*TreeNode{root}
@@ -113,9 +137,12 @@ func main(){
 	// fmt.Printf("max deep:%d", maxDeep(root))
 
 	// fmt.Printf("min deep:%d", minDeep(root))
-	// var r []int
-	// fmt.Printf("pre order traversql:%v", preOrderTraversal(root, r))
 
-	res := breadthFirstSearch(root)
-	fmt.Printf("breadth First Search: %v", res)
+	var r []int
+	// fmt.Printf("pre order traversql:%v", preOrderTraversal(root, r))
+	// fmt.Printf("mid order traversal:%v", midOrderTraversal(root, r))
+	fmt.Printf("post order traversal:%v", postOrderTraversal(root, r))
+
+	// res := breadthFirstSearch(root)
+	// fmt.Printf("breadth First Search: %v", res)
 }
