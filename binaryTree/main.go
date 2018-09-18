@@ -60,6 +60,26 @@ func preOrderTraversal(root *TreeNode, r []int) []int {
 	return r
 }
 
+// 广度优先
+func breadthFirstSearch(root *TreeNode) []int {
+	result := []int{}
+	nodeSlice := []*TreeNode{root}
+
+	for len(nodeSlice) > 0 {
+		node := nodeSlice[0]
+		nodeSlice = nodeSlice[1:]
+		result = append(result, node.Val)
+		if node.Left != nil {
+			nodeSlice = append(nodeSlice, node.Left)
+		}
+		if node.Right != nil {
+			nodeSlice = append(nodeSlice, node.Right)
+		}
+	}
+
+	return result
+}
+
 func geneBinaryTree() *TreeNode {
 	n1 := &TreeNode{Val:1,}
 	n2 := &TreeNode{Val:2,}
@@ -93,6 +113,9 @@ func main(){
 	// fmt.Printf("max deep:%d", maxDeep(root))
 
 	// fmt.Printf("min deep:%d", minDeep(root))
-	var r []int
-	fmt.Printf("pre order traversql:%v", preOrderTraversal(root, r))
+	// var r []int
+	// fmt.Printf("pre order traversql:%v", preOrderTraversal(root, r))
+
+	res := breadthFirstSearch(root)
+	fmt.Printf("breadth First Search: %v", res)
 }
