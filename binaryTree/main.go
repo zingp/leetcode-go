@@ -6,8 +6,8 @@ import (
 
 // TreeNode is binary tree Node
 type TreeNode struct {
-	Val int
-	Left *TreeNode
+	Val   int
+	Left  *TreeNode
 	Right *TreeNode
 }
 
@@ -29,7 +29,7 @@ func maxDeep(root *TreeNode) int {
 	y := maxDeep(root.Right)
 	if x > y {
 		return x + 1
-	} 
+	}
 	return y + 1
 }
 
@@ -73,7 +73,7 @@ func midOrderTraversal(root *TreeNode, r []int) []int {
 
 // 后序
 func postOrderTraversal(root *TreeNode, r []int) []int {
-	if root ==  nil {
+	if root == nil {
 		return r
 	}
 
@@ -105,16 +105,16 @@ func breadthFirstSearch(root *TreeNode) []int {
 }
 
 func geneBinaryTree() *TreeNode {
-	n1 := &TreeNode{Val:1,}
-	n2 := &TreeNode{Val:2,}
-	n3 := &TreeNode{Val:3,}
-	n4 := &TreeNode{Val:4,}
-	n5 := &TreeNode{Val:5,}
-	n6 := &TreeNode{Val:6,}
-	n7 := &TreeNode{Val:7,}
-	n8 := &TreeNode{Val:8,}
-	n9 := &TreeNode{Val:9,}
-	n10 := &TreeNode{Val:10,}
+	n1 := &TreeNode{Val: 1}
+	n2 := &TreeNode{Val: 2}
+	n3 := &TreeNode{Val: 3}
+	n4 := &TreeNode{Val: 4}
+	n5 := &TreeNode{Val: 5}
+	n6 := &TreeNode{Val: 6}
+	n7 := &TreeNode{Val: 7}
+	n8 := &TreeNode{Val: 8}
+	n9 := &TreeNode{Val: 9}
+	n10 := &TreeNode{Val: 10}
 
 	n1.Left = n2
 	n1.Right = n3
@@ -128,7 +128,7 @@ func geneBinaryTree() *TreeNode {
 	return n1
 }
 
-func main(){
+func main() {
 
 	root := geneBinaryTree()
 	// num := getNodeNum(root)
@@ -145,4 +145,5 @@ func main(){
 
 	// res := breadthFirstSearch(root)
 	// fmt.Printf("breadth First Search: %v", res)
+
 }
