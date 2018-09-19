@@ -213,7 +213,9 @@ func deleteKNode(head *ListNode, k int)(*ListNode){
 }
 
 // 单链表划分
-// 有问题
+// 样例：给定链表 1->4->3->2->5->2->null，并且 x=3，返回 1->2->2->4->3->5->null
+// 新建两个链表left,right;left存放小于x的，right存放大于等于x的
+// 最后将left尾节点与right头结点连接起来
 func partition(head *ListNode, x int) *ListNode {
 	if head == nil {
 		return head
@@ -237,6 +239,8 @@ func partition(head *ListNode, x int) *ListNode {
 	left.Next = rightDummy.Next
 	return leftDummy.Next
 }
+
+// 链表求和
 
 // 生成测试链表
 func genListNode()(*ListNode) {
