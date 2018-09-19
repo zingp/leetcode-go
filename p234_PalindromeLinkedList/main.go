@@ -241,6 +241,44 @@ func partition(head *ListNode, x int) *ListNode {
 }
 
 // 链表求和
+// 样例：给出两个链表 3->1->5->null 和 5->9->2->null，返回 8->0->8->null
+func addList(l1 *ListNode, l2 *ListNode) *ListNode {
+	if l1 == nil || l2 == nil {
+		return nil
+	}
+	pre := &ListNode{}
+	cur := pre
+	add1 := 0
+	for l1 != nil {
+		s := l1.Val + l2.Val + add1
+		cur.Next = &ListNode {
+			Val: s % 10,
+		}
+		cur = cur.Next
+		add1 = s / 10
+		l1 = l1.Next
+		l2 = l2.Next
+	}
+	if add1 == 1 {
+		cur.Next = &ListNode{
+			Val: 1,
+		}
+	}
+	return pre.Next
+}
+
+// 切片转链表
+func silce2List(s []int) *ListNode {
+	pre := &ListNode{}
+	r := pre
+	for _, v := range s {
+		r.Next = &ListNode {
+			Val: v,
+		}
+		r = r.Next
+	}
+	return pre.Next
+}
 
 // 生成测试链表
 func genListNode()(*ListNode) {
@@ -277,5 +315,10 @@ func main() {
 	// // cur 就是第4个节点
 	// rangeList(deleteNode(head, cur))
 
-	rangeList(partition(head, 5))
+	// rangeList(partition(head, 5))
+	s1 := []int {6, 2, 3, 9}
+	s2 := []int {4, 3, 2, 1}
+	l1 := silce2List(s1)
+	l2 := silce2List(s2)
+	rangeList(addList(l1, l2))
 }
