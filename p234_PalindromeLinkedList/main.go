@@ -92,7 +92,7 @@ func selectMidListNode(head *ListNode) *ListNode {
 }
 
 // 在O(1)时间复杂度内删除单链表指定节点
-func deleteNode(head *ListNode, node *ListNode)(*ListNode){
+func deleteNode(head *ListNode, node *ListNode) *ListNode {
 	// 如果输入参数有空，直接返回头结点
 	if head == nil || node == nil {
 		return head
@@ -104,14 +104,14 @@ func deleteNode(head *ListNode, node *ListNode)(*ListNode){
 
 	//如果链表有两个及以上节点，且删除的是尾节点
 	if node.Next == nil {
-		// 找待删除元素的前驱节点  
+		// 找待删除元素的前驱节点
 		tmp := head
-		for  tmp.Next != node {
+		for tmp.Next != node {
 			tmp = tmp.Next
 		}
 		// 删除节点
 		tmp.Next = nil
-	}else {
+	} else {
 		// 如果链表有两个及以上节点，且删除的是某个中间结点
 		// 将待删除的节点的下一个节点的值 付给待删除的节点
 		node.Val = node.Next.Val
@@ -123,21 +123,20 @@ func deleteNode(head *ListNode, node *ListNode)(*ListNode){
 }
 
 // 反转部分单链表
-func reverseBetween(head *ListNode, m int, n int)(* ListNode){
+func reverseBetween(head *ListNode, m int, n int) *ListNode {
 	if head == nil || head.Next == nil {
 		return head
 	}
 	i := 1
-	var reverseNewHead *ListNode   // 反转部分链表反转后的头结点，反转过程中这个节点不断变化
-	var reverseNewTail *ListNode   // 第m个节点，即反转部分链表反转后的尾结点
-	var reversePreNode *ListNode   // 第m-1 个节点，即反转部分链表反转前其头结点的前一个结点
-	var reverseNextNode *ListNode  // 反转时，用于挂住下一个节点的节点，当前head的下一个节点
+	var reverseNewHead *ListNode  // 反转部分链表反转后的头结点，反转过程中这个节点不断变化
+	var reverseNewTail *ListNode  // 第m个节点，即反转部分链表反转后的尾结点
+	var reversePreNode *ListNode  // 第m-1 个节点，即反转部分链表反转前其头结点的前一个结点
+	var reverseNextNode *ListNode // 反转时，用于挂住下一个节点的节点，当前head的下一个节点
 	oldHead := head
 	for head != nil {
 		if i > n {
 			break
 		}
-
 		if i == m-1 {
 			reversePreNode = head
 		}
@@ -149,10 +148,9 @@ func reverseBetween(head *ListNode, m int, n int)(* ListNode){
 			head.Next = reverseNewHead
 			reverseNewHead = head
 			head = reverseNextNode
-		}else{
+		} else {
 			head = head.Next
 		}
-
 		i++
 	}
 	// 反转部分反转之后，整体反转一次，连接断开的地方
@@ -162,14 +160,13 @@ func reverseBetween(head *ListNode, m int, n int)(* ListNode){
 	if reversePreNode != nil {
 		reversePreNode.Next = reverseNewHead
 		return oldHead
-	} else {
-		// 如果第m-1个节点是空节点说明m=1，从头开始反转；新的头结点就是reverseNewHead
-		return reverseNewHead
 	}
+	// 如果第m-1个节点是空节点说明m=1，从头开始反转；新的头结点就是reverseNewHead
+	return reverseNewHead
 }
 
 // 旋转单链表
-func rotateRight(head *ListNode, k int)(*ListNode) {
+func rotateRight(head *ListNode, k int) *ListNode {
 	if head == nil || head.Next == nil {
 		return head
 	}
@@ -183,7 +180,7 @@ func rotateRight(head *ListNode, k int)(*ListNode) {
 	// 首尾连接
 	cur.Next = head
 	m := n - k%n
-	for i:=0; i<m; i++ {
+	for i := 0; i < m; i++ {
 		cur = cur.Next
 	}
 	newHead := cur.Next
@@ -192,7 +189,7 @@ func rotateRight(head *ListNode, k int)(*ListNode) {
 }
 
 //  删除单链表倒数第 k 个节点
-func deleteKNode(head *ListNode, k int)(*ListNode){
+func deleteKNode(head *ListNode, k int) *ListNode {
 	if head == nil || head.Next == nil {
 		return nil
 	}
@@ -208,7 +205,7 @@ func deleteKNode(head *ListNode, k int)(*ListNode){
 	}
 	slow.Val = slow.Next.Val
 	slow.Next = slow.Next.Next
-	
+
 	return head
 }
 
@@ -251,7 +248,7 @@ func addList(l1 *ListNode, l2 *ListNode) *ListNode {
 	add1 := 0
 	for l1 != nil {
 		s := l1.Val + l2.Val + add1
-		cur.Next = &ListNode {
+		cur.Next = &ListNode{
 			Val: s % 10,
 		}
 		cur = cur.Next
@@ -267,12 +264,57 @@ func addList(l1 *ListNode, l2 *ListNode) *ListNode {
 	return pre.Next
 }
 
+// 快速排序
+func quickSortList(head *ListNode, end *ListNode) {
+	if head != end {
+		node := partitionList(head, end)
+		quickSortList(head, node)
+		quickSortList(node.Next, end)
+	}
+}
+
+func partitionList(head *ListNode, end *ListNode) *ListNode {
+	p1 := head
+	p2 := head.Next
+
+	for p2 != end {
+		if p2.Val < head.Val {
+			p1 = p1.Next
+			// fmt.Printf("p1.Val=%d, p2.Val=%d\n", p1.Val, p2.Val)
+			// 此时，p1 指向的是大于head.Val的节点；p2指向的是小于head.Val的节点；故相互调换
+			p1.Val, p2.Val = p2.Val, p1.Val
+		}
+		p2 = p2.Next
+	}
+
+	if p1 != head {
+		p1.Val, head.Val = head.Val, p1.Val
+	}
+	return p1
+}
+
+func testQuickSort() {
+
+	n1 := &ListNode{Val: 8}
+	n2 := &ListNode{Val: 2}
+	n3 := &ListNode{Val: 7}
+	n4 := &ListNode{Val: 4}
+	n5 := &ListNode{Val: 5, Next: nil}
+	n1.Next = n2
+	n2.Next = n3
+	n3.Next = n4
+	n4.Next = n5
+
+	quickSortList(n1, nil)
+	rangeList(n1)
+}
+
 // 切片转链表
 func silce2List(s []int) *ListNode {
 	pre := &ListNode{}
 	r := pre
 	for _, v := range s {
-		r.Next = &ListNode {
+		r.Next = &ListNode{
 			Val: v,
 		}
 		r = r.Next
@@ -281,7 +323,7 @@ func silce2List(s []int) *ListNode {
 }
 
 // 生成测试链表
-func genListNode()(*ListNode) {
+func genListNode() *ListNode {
 	n1 := &ListNode{Val: 8}
 	n2 := &ListNode{Val: 2}
 	n3 := &ListNode{Val: 7}
@@ -303,7 +345,7 @@ func main() {
 	// rangeList(deleteKNode(head, 2))
 	// rangeList(rotateRight(head, 3))
 	// rangeList(reverseBetween(head, 2, 4))
-	// i := 1 
+	// i := 1
 	// cur := head
 	// for cur != nil {
 	// 	if i == 4{
@@ -316,9 +358,10 @@ func main() {
 	// rangeList(deleteNode(head, cur))
 
 	// rangeList(partition(head, 5))
-	s1 := []int {6, 2, 3, 9}
-	s2 := []int {4, 3, 2, 1}
-	l1 := silce2List(s1)
-	l2 := silce2List(s2)
-	rangeList(addList(l1, l2))
+	// s1 := []int{6, 2, 3, 9}
+	// s2 := []int{4, 3, 2, 1}
+	// l1 := silce2List(s1)
+	// l2 := silce2List(s2)
+	// rangeList(addList(l1, l2))
+	testQuickSort()
 }
