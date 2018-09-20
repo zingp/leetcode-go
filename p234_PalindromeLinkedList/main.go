@@ -91,6 +91,19 @@ func selectMidListNode(head *ListNode) *ListNode {
 	return slow
 }
 
+// 寻找链表中点，且偶数时返回中间2个元素的第一个元素
+func selectMidListNode2(head *ListNode) *ListNode {
+	if head == nil {
+		return head
+	}
+	slow, fast := head, head
+	if fast.Next != nil || fast.Next != nil {
+		slow = slow.Next
+		fast = fast.Next.Next
+	}
+	return slow
+}
+
 // 在O(1)时间复杂度内删除单链表指定节点
 func deleteNode(head *ListNode, node *ListNode) *ListNode {
 	// 如果输入参数有空，直接返回头结点
@@ -273,6 +286,7 @@ func quickSortList(head *ListNode, end *ListNode) {
 	}
 }
 
+// 快排中的一次调整
 func partitionList(head *ListNode, end *ListNode) *ListNode {
 	p1 := head
 	p2 := head.Next
@@ -293,6 +307,7 @@ func partitionList(head *ListNode, end *ListNode) *ListNode {
 	return p1
 }
 
+// 测试快排
 func testQuickSort() {
 
 	n1 := &ListNode{Val: 8}
@@ -307,6 +322,11 @@ func testQuickSort() {
 
 	quickSortList(n1, nil)
 	rangeList(n1)
+}
+
+// 合并两个有序链表
+func mergeSortList(head1, head2 *ListNode) *ListNode {
+
 }
 
 // 切片转链表
@@ -328,11 +348,11 @@ func genListNode() *ListNode {
 	n2 := &ListNode{Val: 2}
 	n3 := &ListNode{Val: 7}
 	n4 := &ListNode{Val: 4}
-	n5 := &ListNode{Val: 5, Next: nil}
+	// n5 := &ListNode{Val: 5, Next: nil}
 	n1.Next = n2
 	n2.Next = n3
 	n3.Next = n4
-	n4.Next = n5
+	// n4.Next = n5
 
 	return n1
 }
@@ -341,6 +361,8 @@ func main() {
 	head := genListNode()
 	rangeList(head)
 	fmt.Println("----------------------")
+	mid := selectMidListNode2(head)
+	fmt.Printf("mid:%d", mid.Val)
 
 	// rangeList(deleteKNode(head, 2))
 	// rangeList(rotateRight(head, 3))
@@ -363,5 +385,6 @@ func main() {
 	// l1 := silce2List(s1)
 	// l2 := silce2List(s2)
 	// rangeList(addList(l1, l2))
-	testQuickSort()
+
+	// testQuickSort()
 }
