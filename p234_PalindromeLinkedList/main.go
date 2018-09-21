@@ -97,7 +97,7 @@ func selectMidListNode2(head *ListNode) *ListNode {
 		return head
 	}
 	slow, fast := head, head
-	if fast.Next != nil || fast.Next != nil {
+	if fast.Next != nil || fast.Next.Next != nil {
 		slow = slow.Next
 		fast = fast.Next.Next
 	}
@@ -327,6 +327,7 @@ func testQuickSort() {
 // 合并两个有序链表
 func mergeSortList(head1, head2 *ListNode) *ListNode {
 
+	return head1
 }
 
 // 切片转链表
