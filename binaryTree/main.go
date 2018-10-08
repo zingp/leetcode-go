@@ -104,6 +104,17 @@ func breadthFirstSearch(root *TreeNode) []int {
 	return result
 }
 
+// 求二叉树镜像
+func invertTree(root *TreeNode) *TreeNode {
+	if root == nil {
+		return nil
+	}
+	leftNode := root.Left
+	root.Left = invertTree(root.Right)
+	root.Right = invertTree(leftNode)
+	return root
+}
+
 func geneBinaryTree() *TreeNode {
 	n1 := &TreeNode{Val: 1}
 	n2 := &TreeNode{Val: 2}
@@ -139,11 +150,13 @@ func main() {
 	// fmt.Printf("min deep:%d", minDeep(root))
 
 	var r []int
-	// fmt.Printf("pre order traversql:%v", preOrderTraversal(root, r))
+	fmt.Printf("pre order traversql:%v", preOrderTraversal(root, r))
 	// fmt.Printf("mid order traversal:%v", midOrderTraversal(root, r))
-	fmt.Printf("post order traversal:%v", postOrderTraversal(root, r))
+	// fmt.Printf("post order traversal:%v", postOrderTraversal(root, r))
 
 	// res := breadthFirstSearch(root)
 	// fmt.Printf("breadth First Search: %v", res)
-
+	new := invertTree(root)
+	var n []int
+	fmt.Printf("image %v", preOrderTraversal(new, n))
 }
