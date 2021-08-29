@@ -18,7 +18,6 @@ func rightSideView(root *TreeNode) []int {
 	for len(queue) > 0 {
 		levelSize := len(queue)
 		res = append(res, queue[levelSize-1].Val)
-
 		for i := 0; i < levelSize; i ++ {
 			node := queue[0]
 			queue = queue[1:]
@@ -66,5 +65,6 @@ func main(){
 	root.Right.Right.Left = node6
 	root.Right.Right.Left.Left = node7
 	res := rightSideView(root)
-	fmt.Printf("res=%v\n", res)
+	res1 := rightSideView(nil)
+	fmt.Printf("res=%v, res1=%v\n", res, res1)
 }
